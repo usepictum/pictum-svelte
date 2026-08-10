@@ -1,0 +1,67 @@
+{
+	"name": "@pictum/svelte",
+	"type": "module",
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"version": "0.0.0",
+	"packageManager": "pnpm@11.11.0",
+	"description": "Pictum asset components for Svelte.",
+	"author": "Nicolas Hedger <nicolas@hedger.ch>",
+	"license": "MIT",
+	"homepage": "https://github.com/usepictum/pictum-svelte#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/usepictum/pictum-svelte.git"
+	},
+	"bugs": {
+		"url": "https://github.com/usepictum/pictum-svelte/issues"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"sideEffects": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "svelte-package --input src --output dist --tsconfig ./tsconfig.build.json",
+		"check": "biome check .",
+		"check:fix": "biome check --write .",
+		"dev": "svelte-package --input src --output dist --tsconfig ./tsconfig.build.json --watch",
+		"format": "biome format --write .",
+		"lint": "biome lint .",
+		"play": "pnpm build && pnpm --filter @pictum/playground-svelte dev",
+		"test": "vitest --run",
+		"typecheck": "svelte-check --tsconfig ./tsconfig.json",
+		"prepublishOnly": "pnpm build"
+	},
+	"dependencies": {
+		"pictum": "^0.1.1"
+	},
+	"peerDependencies": {
+		"svelte": "^5.0.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.5.7",
+		"@sveltejs/package": "^2.5.8",
+		"@sveltejs/vite-plugin-svelte": "^7.3.0",
+		"@tsconfig/strictest": "^2.0.8",
+		"@vitest/browser": "^4.1.10",
+		"@vitest/browser-playwright": "^4.1.10",
+		"git-cliff": "2.13.1",
+		"playwright": "^1.62.1",
+		"publint": "^0.3.23",
+		"svelte": "^5.56.8",
+		"svelte-check": "^4.7.5",
+		"typescript": "^6.0.3",
+		"vite": "^8.1.4",
+		"vitest": "^4.1.10"
+	}
+}

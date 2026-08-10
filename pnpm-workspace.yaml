@@ -1,0 +1,12 @@
+packages: [playground]
+
+allowBuilds:
+  esbuild: true
+
+packageExtensions:
+  "@sveltejs/package@2.5.8":
+    dependencies:
+      typescript: 6.0.3
+
+minimumReleaseAgeExclude:
+  - pictum
