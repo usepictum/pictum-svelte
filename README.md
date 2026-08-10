@@ -1,4 +1,4 @@
-# <img src="https://pictum.dev/api/v1/icons/devicon/svelte.svg" width="20" /> Pictum for Svelte
+# <img src="https://pictum.dev/api/v1/icons/skill-icons/svelte.svg" width="22" /> Pictum for Svelte
 
 [![npm version](https://npmx.dev/api/registry/badge/version/@pictum/svelte?color=bfdbfe&labelColor=404040)](https://npmx.dev/package/@pictum/svelte)
 [![monthly downloads](https://npmx.dev/api/registry/badge/downloads/@pictum/svelte?color=fed7aa&labelColor=404040)](https://npmx.dev/package/@pictum/svelte)
