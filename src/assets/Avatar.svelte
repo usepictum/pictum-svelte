@@ -8,6 +8,7 @@ let {
 	variant,
 	gender,
 	format,
+	size,
 	options,
 	alt,
 	...imageProps
@@ -19,6 +20,7 @@ const helperOptions = $derived.by(
 			...(variant === undefined ? {} : { variant }),
 			...(gender === undefined ? {} : { gender }),
 			...(format === undefined ? {} : { format }),
+			...(size === undefined ? {} : { size }),
 		}) as AvatarOptions,
 );
 const asset = useAvatar(

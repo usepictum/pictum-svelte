@@ -57,16 +57,16 @@ describe("components", () => {
 
 		expect(container.querySelector('[alt="Ada"]')).toHaveAttribute(
 			"src",
-			"https://staging.example.com/v1/avatars/initials/ada-lovelace.svg",
+			"https://staging.example.com/v1/avatar.svg?seed=ada-lovelace",
 		);
 		expect(container.querySelector('[alt="Hello"]')).toHaveAttribute(
 			"src",
-			"https://preview.example.com/v1/qr-codes.svg?data=aGVsbG8%3D",
+			"https://preview.example.com/v1/qrcode.svg?data=aGVsbG8%3D",
 		);
 		expect(
 			container.querySelector('[data-testid="inherited"]'),
 		).toHaveTextContent(
-			"https://staging.example.com/v1/avatars/initials/grace-hopper.svg",
+			"https://staging.example.com/v1/avatar.svg?seed=grace-hopper",
 		);
 	});
 
@@ -75,44 +75,64 @@ describe("components", () => {
 		const assetUrl = container.querySelector('[data-testid="asset-url"]');
 
 		expect(assetUrl).toHaveTextContent(
-			"https://pictum.dev/api/v1/avatars/initials/ada-lovelace.webp",
+			"https://pictum.dev/v1/avatar.webp?seed=ada-lovelace",
 		);
 
 		container.querySelector("button")?.click();
 		await tick();
 
 		expect(assetUrl).toHaveTextContent(
-			"https://pictum.dev/api/v1/avatars/initials/grace-hopper.webp",
+			"https://pictum.dev/v1/avatar.webp?seed=grace-hopper",
 		);
 	});
 
-	test("renders gendered realistic avatars", () => {
+	test("renders an unfiltered portrait for the any gender", () => {
 		const container = render(Avatar, {
 			seed: "customer-123",
-			variant: "realistic",
-			gender: "female",
+			variant: "portrait",
+			gender: "any",
 			alt: "Customer",
 		});
 
 		expect(container.querySelector('[alt="Customer"]')).toHaveAttribute(
 			"src",
-			"https://pictum.dev/api/v1/avatars/realistic/female/customer-123.webp",
+			"https://pictum.dev/v1/avatar.webp?seed=customer-123&variant=portrait",
 		);
 	});
 
-	test("forwards QR code quiet-zone options without leaking DOM attributes", () => {
-		const container = render(QrCode, {
-			value: "hello",
-			quietZone: false,
-			alt: "Hello without quiet zone",
+	test("uses avatar source size without forwarding it to the image", () => {
+		const container = render(Avatar, {
+			seed: "customer-256",
+			variant: "portrait",
+			size: 256,
+			alt: "Sized customer",
 		});
-		const image = container.querySelector('[alt="Hello without quiet zone"]');
+		const image = container.querySelector('[alt="Sized customer"]');
 
 		expect(image).toHaveAttribute(
 			"src",
-			"https://pictum.dev/api/v1/qr-codes.svg?data=aGVsbG8%3D&quiet_zone=0",
+			"https://pictum.dev/v1/avatar.webp?seed=customer-256&variant=portrait&size=256",
+		);
+		expect(image).not.toHaveAttribute("size");
+	});
+
+	test("forwards QR code options without leaking DOM attributes", () => {
+		const container = render(QrCode, {
+			value: "hello",
+			quietZone: false,
+			foreground: "#11223344",
+			background: "#aabbccdd",
+			alt: "Custom QR code",
+		});
+		const image = container.querySelector('[alt="Custom QR code"]');
+
+		expect(image).toHaveAttribute(
+			"src",
+			"https://pictum.dev/v1/qrcode.svg?data=aGVsbG8%3D&quiet_zone=0&foreground=%2311223344&background=%23aabbccdd",
 		);
 		expect(image).not.toHaveAttribute("quietzone");
+		expect(image).not.toHaveAttribute("foreground");
+		expect(image).not.toHaveAttribute("background");
 	});
 
 	test("sets placeholder logical image dimensions", () => {
@@ -130,7 +150,7 @@ describe("components", () => {
 		expect(image).toHaveAttribute("height", "360");
 		expect(image).toHaveAttribute(
 			"src",
-			"https://pictum.dev/api/v1/placeholders/640x360@3x.webp?text=Coming+soon",
+			"https://pictum.dev/v1/placeholder.webp?width=640&height=360&density=3&text=Coming+soon",
 		);
 	});
 });
